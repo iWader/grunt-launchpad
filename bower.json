@@ -1,0 +1,16 @@
+{
+    "name": "CHANGEME",
+    "dependencies": {
+        "bootstrap": "~3.2.0",
+        "jquery": "~2.1.1"
+    },
+    "ignore": [
+        "bower_components",
+        "node_modules",
+        "vendor"
+    ],
+    "authors": [
+        "Wade Urry <http://iwader.co.uk/>"
+    ],
+    "private": true
+}

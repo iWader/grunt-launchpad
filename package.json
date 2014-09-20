@@ -1,6 +1,8 @@
 {
     "name": "CHANGEME",
-    "dependencies": {},
+    "dependencies": {
+        "bower": "*"
+    },
     "authors": [
         {
             "name": "Wade Urry",
