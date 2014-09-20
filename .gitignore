@@ -1,6 +1,9 @@
 # IDE
 .idea/
 
+# Builds
+.build/
+
 # Resources/Third Party
 vendor/
 bower_components/

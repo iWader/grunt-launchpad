@@ -6,6 +6,7 @@ module.exports = function(grunt) {
 
     var config = {
         bower_path: 'bower_components',
+        build_path: '.build',
         css: 'assets/css',
         js: 'assets/js',
         images: 'assets/img',
@@ -14,20 +15,9 @@ module.exports = function(grunt) {
     };
 
     var jsFileList = [
-        '<%= config.bower_path %>/bootstrap/js/transition.js',
-        '<%= config.bower_path %>/bootstrap/js/alert.js',
-        '<%= config.bower_path %>/bootstrap/js/button.js',
-        //'<%= config.bower_path %>/bootstrap/js/carousel.js',
-        //'<%= config.bower_path %>/bootstrap/js/collapse.js',
-        '<%= config.bower_path %>/bootstrap/js/dropdown.js',
-        //'<%= config.bower_path %>/bootstrap/js/modal.js',
-        //'<%= config.bower_path %>/bootstrap/js/tooltip.js',
-        //'<%= config.bower_path %>/bootstrap/js/popover.js',
-        //'<%= config.bower_path %>/bootstrap/js/scrollspy.js',
-        //'<%= config.bower_path %>/bootstrap/js/tab.js',
-        '<%= config.bower_path %>/bootstrap/js/affix.js',
         '<%= config.js %>/*.js',
-        '!<%= config.js %>/scripts.js'
+        '!<%= config.js %>/scripts.js',
+        '!<%= config.js %>/scripts.min.js'
     ];
 
     grunt.initConfig({
@@ -46,7 +36,16 @@ module.exports = function(grunt) {
         uglify: {
             dist: {
                 files: {
-                    '<%= config.js %>/scripts.min.js': [jsFileList]
+                    '<%= config.js %>/scripts.min.js': [
+                        '<%= config.build_path %>/js/bootstrap.js',
+                        '<%= config.js %>/vendor/**/*.js',
+                        '<%= config.js %>/vendor/*.js',
+                        '!<%= config.js %>/vendor/jquery.js',
+                        '<%= config.js %>/*.js',
+                        '!<%= config.js %>/scripts.js',
+                        '!<%= config.js %>/scripts.min.js',
+                        '<%= config.build_path %>/js/scripts.js'
+                    ]
                 }
             }
         },
@@ -55,8 +54,29 @@ module.exports = function(grunt) {
                 separator: ';'
             },
             dist: {
-                src: [jsFileList],
-                dest: '<%= config.js %>/scripts.js'
+                files: {
+                    '<%= config.build_path %>/js/bootstrap.js': [
+                        '<%= config.bower_path %>/bootstrap/js/transition.js',
+                        '<%= config.bower_path %>/bootstrap/js/alert.js',
+                        '<%= config.bower_path %>/bootstrap/js/button.js',
+                        //'<%= config.bower_path %>/bootstrap/js/carousel.js',
+                        //'<%= config.bower_path %>/bootstrap/js/collapse.js',
+                        '<%= config.bower_path %>/bootstrap/js/dropdown.js',
+                        //'<%= config.bower_path %>/bootstrap/js/modal.js',
+                        //'<%= config.bower_path %>/bootstrap/js/tooltip.js',
+                        //'<%= config.bower_path %>/bootstrap/js/popover.js',
+                        //'<%= config.bower_path %>/bootstrap/js/scrollspy.js',
+                        //'<%= config.bower_path %>/bootstrap/js/tab.js',
+                        '<%= config.bower_path %>/bootstrap/js/affix.js'
+                    ],
+                    '<%= config.build_path %>/js/scripts.js': [
+                        jsFileList
+                    ],
+                    '<%= config.js %>/scripts.js': [
+                        '<%= config.build_path %>/js/bootstrap.js',
+                        '<%= config.build_path %>/js/scripts.js'
+                    ]
+                }
             }
         },
         less: {
