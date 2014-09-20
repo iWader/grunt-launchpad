@@ -99,6 +99,17 @@ module.exports = function(grunt) {
             }
         },
         copy: {
+            main: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= config.bower_path %>/bootstrap/fonts/',
+                        src: ['**'],
+                        dest: '<%= config.fonts %>',
+                        filter: 'isFile'
+                    }
+                ]
+            },
             dev: {
                 files: [
                     {
@@ -156,6 +167,7 @@ module.exports = function(grunt) {
     grunt.registerTask('dev', [
         'jshint',
         'copy:dev',
+        'copy:main',
         'less:dev',
         'autoprefixer:dev',
         'concat'
@@ -164,6 +176,7 @@ module.exports = function(grunt) {
     grunt.registerTask('build', [
         'jshint',
         'copy:build',
+        'copy:main',
         'less:build',
         'autoprefixer:build',
         'uglify'
