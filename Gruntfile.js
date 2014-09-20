@@ -4,6 +4,7 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-uglify');
 
     var config = {
@@ -11,7 +12,8 @@ module.exports = function(grunt) {
         css: 'assets/css',
         js: 'assets/js',
         images: 'assets/img',
-        fonts: 'assets/fonts'
+        fonts: 'assets/fonts',
+        less: 'assets/less'
     };
 
     var jsFileList = [
@@ -28,7 +30,7 @@ module.exports = function(grunt) {
         //'<%= config.bower_path %>/bootstrap/js/tab.js',
         '<%= config.bower_path %>/bootstrap/js/affix.js',
         '<%= config.js %>/**/*.js',
-        '!<%= config.js %>/scripts.js',
+        '!<%= config.js %>/scripts.js'
     ];
 
     grunt.initConfig({
@@ -59,6 +61,29 @@ module.exports = function(grunt) {
                 src: [jsFileList],
                 dest: '<%= config.js %>/scripts.js'
             }
+        },
+        less: {
+            dev: {
+                files: {
+                    '<%= config.css %>/styles.css': [
+                        '<%= config.less %>/app.less'
+                    ]
+                },
+                options: {
+                    compress: false,
+                    sourceMap: true
+                }
+            },
+            build: {
+                files: {
+                    '<%= config.css %>/styles.min.css': [
+                        '<%= config.less %>/app.less'
+                    ]
+                },
+                options: {
+                    compress: true
+                }
+            }
         }
     });
 
@@ -68,11 +93,13 @@ module.exports = function(grunt) {
 
     grunt.registerTask('dev', [
         'jshint',
+        'less:dev',
         'concat'
     ]);
 
     grunt.registerTask('build', [
         'jshint',
+        'less:build',
         'uglify'
     ]);
 
