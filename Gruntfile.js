@@ -7,6 +7,7 @@ module.exports = function(grunt) {
     var config = {
         bower_path: 'bower_components',
         build_path: '.build',
+        coffee: 'assets/coffeescript',
         css: 'assets/css',
         js: 'assets/js',
         images: 'assets/img',
@@ -31,6 +32,9 @@ module.exports = function(grunt) {
                 '<%= config.js %>/*.js',
                 '!<%= config.js %>/scripts.js',
                 '!<%= config.js %>/**/*.min.*'
+            ],
+            coffee: [
+                '<%= config.build_path %>/coffee/*.js'
             ]
         },
         uglify: {
@@ -44,6 +48,7 @@ module.exports = function(grunt) {
                         '<%= config.js %>/*.js',
                         '!<%= config.js %>/scripts.js',
                         '!<%= config.js %>/scripts.min.js',
+                        '<%= config.build_path %>/js/_coffeescripts.js',
                         '<%= config.build_path %>/js/scripts.js'
                     ]
                 }
@@ -54,6 +59,18 @@ module.exports = function(grunt) {
                 separator: ';'
             },
             dist: {
+                files: {
+                    '<%= config.build_path %>/js/scripts.js': [
+                        jsFileList
+                    ],
+                    '<%= config.js %>/scripts.js': [
+                        '<%= config.build_path %>/js/bootstrap.js',
+                        '<%= config.build_path %>/js/_coffeescripts.js',
+                        '<%= config.build_path %>/js/scripts.js'
+                    ]
+                }
+            },
+            bootstrap: {
                 files: {
                     '<%= config.build_path %>/js/bootstrap.js': [
                         '<%= config.bower_path %>/bootstrap/js/transition.js',
@@ -67,14 +84,14 @@ module.exports = function(grunt) {
                         //'<%= config.bower_path %>/bootstrap/js/popover.js',
                         //'<%= config.bower_path %>/bootstrap/js/scrollspy.js',
                         //'<%= config.bower_path %>/bootstrap/js/tab.js',
-                        '<%= config.bower_path %>/bootstrap/js/affix.js'
-                    ],
-                    '<%= config.build_path %>/js/scripts.js': [
-                        jsFileList
-                    ],
-                    '<%= config.js %>/scripts.js': [
-                        '<%= config.build_path %>/js/bootstrap.js',
-                        '<%= config.build_path %>/js/scripts.js'
+                        //'<%= config.bower_path %>/bootstrap/js/affix.js'
+                    ]
+                }
+            },
+            coffee: {
+                files: {
+                    '<%= config.build_path %>/js/_coffeescripts.js': [
+                        '<%= config.build_path %>/coffee/*.js'
                     ]
                 }
             }
@@ -146,7 +163,7 @@ module.exports = function(grunt) {
                         src: ['**'],
                         dest: '<%= config.fonts %>',
                         filter: 'isFile'
-                    },
+                    }
                 ]
             },
             dev: {
@@ -166,6 +183,20 @@ module.exports = function(grunt) {
                         cwd: '<%= config.bower_path %>/jquery/dist/',
                         src: ['jquery.min.js'],
                         dest: '<%= config.js %>/vendor/'
+                    }
+                ]
+            }
+        },
+        coffee: {
+            compile: {
+                files: [
+                    {
+                        expand: true,
+                        flatten: true,
+                        cwd: '<%= config.coffee %>',
+                        src: ['*.coffee'],
+                        dest: '<%= config.build_path %>/coffee/',
+                        ext: '.js'
                     }
                 ]
             }
@@ -204,21 +235,26 @@ module.exports = function(grunt) {
     ]);
 
     grunt.registerTask('dev', [
-        'jshint',
+        'coffee',
         'copy:dev',
         'copy:main',
         'less:dev',
         'autoprefixer:dev',
         'concat',
+        'jshint',
         'watch'
     ]);
 
     grunt.registerTask('build', [
-        'jshint',
+        'coffee',
         'copy:build',
         'copy:main',
         'less:build',
         'autoprefixer:build',
+        'concat:bootstrap',
+        'concat:coffee',
+        'jshint',
+        'jshint:coffee',
         'uglify'
     ]);
 
