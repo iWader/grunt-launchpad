@@ -2,6 +2,7 @@
 
 module.exports = function(grunt) {
 
+    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-uglify');
 
@@ -49,6 +50,15 @@ module.exports = function(grunt) {
                     '<%= config.js %>/scripts.min.js': [jsFileList]
                 }
             }
+        },
+        concat: {
+            options: {
+                separator: ';'
+            },
+            dist: {
+                src: [jsFileList],
+                dest: '<%= config.js %>/scripts.js'
+            }
         }
     });
 
@@ -57,7 +67,8 @@ module.exports = function(grunt) {
     ]);
 
     grunt.registerTask('dev', [
-        'jshint'
+        'jshint',
+        'concat'
     ]);
 
     grunt.registerTask('build', [
