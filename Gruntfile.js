@@ -189,7 +189,8 @@ module.exports = function(grunt) {
         'copy:main',
         'less:dev',
         'autoprefixer:dev',
-        'concat'
+        'concat',
+        'watch'
     ]);
 
     grunt.registerTask('build', [
