@@ -98,6 +98,28 @@ module.exports = function(grunt) {
                 src: '<%= config.css %>/styles.min.css'
             }
         },
+        copy: {
+            dev: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= config.bower_path %>/jquery/dist/',
+                        src: ['jquery.js', 'jquery.min.map'],
+                        dest: '<%= config.js %>/vendor/'
+                    }
+                ]
+            },
+            build: {
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= config.bower_path %>/jquery/dist/',
+                        src: ['jquery.min.js'],
+                        dest: '<%= config.js %>/vendor/'
+                    }
+                ]
+            }
+        },
         watch: {
             less: {
                 files: [
@@ -133,6 +155,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('dev', [
         'jshint',
+        'copy:dev',
         'less:dev',
         'autoprefixer:dev',
         'concat'
@@ -140,6 +163,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('build', [
         'jshint',
+        'copy:build',
         'less:build',
         'autoprefixer:build',
         'uglify'
