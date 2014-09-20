@@ -1,7 +1,9 @@
 {
     "name": "CHANGEME",
     "dependencies": {
-        "bower": "*"
+        "bower": "*",
+        "grunt": "~0.4.5",
+        "grunt-contrib-jshint": "~0.10.0"
     },
     "authors": [
         {
