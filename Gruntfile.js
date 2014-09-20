@@ -103,11 +103,30 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
+                        cwd: '<%= config.bower_path %>/bootstrap/less/',
+                        src: ['**'],
+                        dest: '<%= config.less %>/vendor/bootstrap/'
+                    },
+                    {
+                        expand: true,
                         cwd: '<%= config.bower_path %>/bootstrap/fonts/',
                         src: ['**'],
                         dest: '<%= config.fonts %>',
                         filter: 'isFile'
-                    }
+                    },
+                    {
+                        expand: true,
+                        cwd: '<%= config.bower_path %>/font-awesome/less/',
+                        src: ['**'],
+                        dest: '<%= config.less %>/vendor/font-awesome/'
+                    },
+                    {
+                        expand: true,
+                        cwd: '<%= config.bower_path %>/font-awesome/fonts/',
+                        src: ['**'],
+                        dest: '<%= config.fonts %>',
+                        filter: 'isFile'
+                    },
                 ]
             },
             dev: {
