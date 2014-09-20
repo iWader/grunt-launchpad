@@ -1,0 +1,11 @@
+{
+    "name": "CHANGEME",
+    "dependencies": {},
+    "authors": [
+        {
+            "name": "Wade Urry",
+            "url": "http://iwader.co.uk/"
+        }
+    ],
+    "private": true
+}
