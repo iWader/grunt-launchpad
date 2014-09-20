@@ -1,0 +1,14 @@
+# IDE
+.idea/
+
+# Resources/Third Party
+vendor/
+bower_components/
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
