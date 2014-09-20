@@ -82,13 +82,29 @@ module.exports = function(grunt) {
                 }
             }
         },
+        autoprefixer: {
+            options: {
+                browsers: ['last 2 versions', 'ie 8', 'ie 9', 'android 2.3', 'android 4', 'opera 12']
+            },
+            dev: {
+                options: {
+                    map: {
+                        prev: '<%= config.css %>'
+                    }
+                },
+                src: '<%= config.css %>/styles.css'
+            },
+            build: {
+                src: '<%= config.css %>/styles.min.css'
+            }
+        },
         watch: {
             less: {
                 files: [
                     '<%= config.less %>/*.less',
                     '<%= config.less %>/**/*.less'
                 ],
-                tasks: ['less:dev']
+                tasks: ['less:dev', 'autoprefixer:dev']
             },
             js: {
                 files: [
@@ -118,13 +134,14 @@ module.exports = function(grunt) {
     grunt.registerTask('dev', [
         'jshint',
         'less:dev',
-        'concat',
-        'watch',
+        'autoprefixer:dev',
+        'concat'
     ]);
 
     grunt.registerTask('build', [
         'jshint',
         'less:build',
+        'autoprefixer:build',
         'uglify'
     ]);
 
