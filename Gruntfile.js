@@ -6,6 +6,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-watch');
 
     var config = {
         bower_path: 'bower_components',
@@ -29,7 +30,7 @@ module.exports = function(grunt) {
         //'<%= config.bower_path %>/bootstrap/js/scrollspy.js',
         //'<%= config.bower_path %>/bootstrap/js/tab.js',
         '<%= config.bower_path %>/bootstrap/js/affix.js',
-        '<%= config.js %>/**/*.js',
+        '<%= config.js %>/*.js',
         '!<%= config.js %>/scripts.js'
     ];
 
@@ -84,6 +85,33 @@ module.exports = function(grunt) {
                     compress: true
                 }
             }
+        },
+        watch: {
+            less: {
+                files: [
+                    '<%= config.less %>/*.less',
+                    '<%= config.less %>/**/*.less'
+                ],
+                tasks: ['less:dev']
+            },
+            js: {
+                files: [
+                    jsFileList,
+                    '<%= jshint.all %>'
+                ],
+                tasks: ['jshint', 'concat']
+            },
+            livereload: {
+                options: {
+                    livereload: true
+                },
+                files: [
+                    '<%= config.css %>/styles.css',
+                    '<%= config.js %>/scripts.js',
+                    'app/*.php',
+                    'app/**/*.php'
+                ]
+            }
         }
     });
 
@@ -94,7 +122,8 @@ module.exports = function(grunt) {
     grunt.registerTask('dev', [
         'jshint',
         'less:dev',
-        'concat'
+        'concat',
+        'watch',
     ]);
 
     grunt.registerTask('build', [
