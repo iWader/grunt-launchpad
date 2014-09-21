@@ -206,6 +206,34 @@ module.exports = function(grunt) {
                 "<%= config.build_path %>"
             ]
         },
+        imagemin: {
+            dev: {
+                options: {
+                    optimizationLevel: 0
+                },
+                files: [
+                    {
+                        expand: true,
+                        cwd: "<%= config.images %>/src/",
+                        src: ["**/*.{png,jpg,gif}"],
+                        dest: "<%= config.images %>/dist/"
+                    }
+                ]
+            },
+            build: {
+                options: {
+                    optimizationlevel: 3
+                },
+                files: [
+                    {
+                        expand: true,
+                        cwd: "<%= config.images %>/src/",
+                        src: ["**/*.{png,jpg,gif}"],
+                        dest: "<%= config.images %>/dist/"
+                    }
+                ]
+            }
+        },
         watch: {
             less: {
                 files: [
@@ -247,6 +275,7 @@ module.exports = function(grunt) {
         'autoprefixer:dev',
         'concat',
         'jshint',
+        'imagemin:dev',
         'watch'
     ]);
 
@@ -262,6 +291,7 @@ module.exports = function(grunt) {
         'jshint',
         'jshint:coffee',
         'uglify',
+        'imagemin:build',
         'clean'
     ]);
 
