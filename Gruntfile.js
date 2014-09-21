@@ -58,6 +58,13 @@ module.exports = function(grunt) {
             options: {
                 separator: ';'
             },
+            coffee: {
+                files: {
+                    '<%= config.build_path %>/js/_coffeescripts.js': [
+                        '<%= config.build_path %>/coffee/*.js'
+                    ]
+                }
+            },
             dist: {
                 files: {
                     '<%= config.build_path %>/js/scripts.js': [
@@ -85,13 +92,6 @@ module.exports = function(grunt) {
                         //'<%= config.bower_path %>/bootstrap/js/scrollspy.js',
                         //'<%= config.bower_path %>/bootstrap/js/tab.js',
                         //'<%= config.bower_path %>/bootstrap/js/affix.js'
-                    ]
-                }
-            },
-            coffee: {
-                files: {
-                    '<%= config.build_path %>/js/_coffeescripts.js': [
-                        '<%= config.build_path %>/coffee/*.js'
                     ]
                 }
             }
@@ -248,6 +248,12 @@ module.exports = function(grunt) {
                     '<%= jshint.all %>'
                 ],
                 tasks: ['jshint', 'concat']
+            },
+            coffee: {
+                files: [
+                    '<%= config.coffee %>/*.coffee'
+                ],
+                tasks: ['coffee', 'jshint:coffee', 'concat']
             },
             imagemin: {
                 files: [
