@@ -201,6 +201,11 @@ module.exports = function(grunt) {
                 ]
             }
         },
+        clean: {
+            build: [
+                "<%= config.build_path %>"
+            ]
+        },
         watch: {
             less: {
                 files: [
@@ -246,6 +251,7 @@ module.exports = function(grunt) {
     ]);
 
     grunt.registerTask('build', [
+        'clean',
         'coffee',
         'copy:build',
         'copy:main',
@@ -255,7 +261,8 @@ module.exports = function(grunt) {
         'concat:coffee',
         'jshint',
         'jshint:coffee',
-        'uglify'
+        'uglify',
+        'clean'
     ]);
 
 };
