@@ -209,7 +209,7 @@ module.exports = function(grunt) {
         imagemin: {
             dev: {
                 options: {
-                    optimizationLevel: 0
+                    optimizationLevel: 1
                 },
                 files: [
                     {
@@ -248,6 +248,13 @@ module.exports = function(grunt) {
                     '<%= jshint.all %>'
                 ],
                 tasks: ['jshint', 'concat']
+            },
+            imagemin: {
+                files: [
+                    '<%= config.images %>/src/*.{jpg,png,gif}',
+                    '<%= config.images %>/src/**/*.{jpg,png,gif}'
+                ],
+                tasks: ['imagemin:dev']
             },
             livereload: {
                 options: {
